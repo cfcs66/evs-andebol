@@ -2,7 +2,7 @@
 // IMPORTANTE: sempre que fizeres uma alteração relevante, muda o número da versão
 // abaixo (ex: v2 -> v3). Isso obriga o telemóvel a ir buscar a versão nova,
 // em vez de continuar a usar uma cópia antiga guardada em cache.
-const CACHE_NAME = 'evs-andebol-v0.0.0';
+const CACHE_NAME = 'evs-andebol-v0.0.1';
 
 self.addEventListener('install', e => {
   self.skipWaiting();
