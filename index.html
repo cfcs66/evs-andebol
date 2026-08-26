@@ -93,6 +93,21 @@
   }
   .sb-periods button.active{background:var(--green-500); color:var(--dark); border-color:var(--green-500); font-weight:600;}
 
+  @media (max-width:900px){
+    .scoreboard{padding:10px 14px 12px; border-radius:0 0 14px 14px; margin-bottom:10px;}
+    .sb-top{margin-bottom:6px; font-size:9px;}
+    .sb-clock button{padding:2px 7px; font-size:9px;}
+    .sb-time{font-size:12px; min-width:40px;}
+    .sb-main{gap:8px;}
+    .sb-team input.teamname{font-size:14px; max-width:140px;}
+    .sb-period{font-size:9px;}
+    .sb-score{gap:6px;}
+    .sb-score .num{font-size:30px; min-width:34px;}
+    .sb-score .sep{font-size:18px;}
+    .sb-periods{margin-top:6px; gap:5px;}
+    .sb-periods button{padding:3px 9px; font-size:10px;}
+  }
+
   /* ===== TABS ===== */
   .tabs{display:flex; gap:6px; padding:0 20px; margin-bottom:16px;}
   .tabs button{
@@ -319,6 +334,17 @@
   /* ===== MODAL: ZONA DE REMATE ===== */
   .modal-backdrop{position:fixed; inset:0; background:rgba(19,43,24,.55); display:flex; align-items:center; justify-content:center; z-index:80; padding:16px;}
   .modal-box{background:#fff; border-radius:16px; padding:20px; width:100%; max-width:420px; max-height:92vh; overflow-y:auto; box-shadow:0 12px 40px rgba(0,0,0,.3);}
+  .modal-box.wide{max-width:900px;}
+  .shot-modal-columns{display:flex; gap:14px; align-items:flex-start;}
+  .shot-modal-col{flex:1; min-width:0;}
+  .shot-modal-col.narrow{flex:0 0 130px;}
+  .outcome-btns.col{display:flex; flex-direction:column; gap:8px;}
+  @media (max-width:700px){
+    .shot-modal-columns{flex-wrap:wrap;}
+    .shot-modal-col{flex:1 1 45%;}
+    .shot-modal-col.narrow{flex:1 1 100%; order:3;}
+    .outcome-btns.col{flex-direction:row;}
+  }
   .modal-box.small{max-width:300px;}
   .tech-list{display:flex; flex-direction:column; gap:8px;}
   .techbtn{background:#fff; border:1.5px solid var(--green-500); color:var(--green-900); border-radius:8px; padding:12px; font-weight:700; font-size:13.5px; cursor:pointer; font-family:'Inter',sans-serif; text-align:left;}
@@ -1705,21 +1731,29 @@ function renderShotModal(){
   const insideSelected = p.zoneGoal && GOAL_ZONES.includes(p.zoneGoal);
   return `
   <div class="modal-backdrop" data-modal-cancel="1">
-    <div class="modal-box" onclick="event.stopPropagation()">
+    <div class="modal-box wide" onclick="event.stopPropagation()">
       <h3>${EVENT_TYPES[p.type].label} — ${player ? (player.num!=='-'?'#'+player.num+' ':'')+player.name : ''}</h3>
-      <div class="zone-title">Zona da Baliza ${requiresGoalZone ? '<span class="req">(obrigatório)</span>' : '<span class="opt">(opcional)</span>'}</div>
-      ${renderGoalSvg(p.zoneGoal, showOutside)}
-      ${p.type==='remate' ? `
-      <div class="zone-title" style="margin-top:10px;">Resultado <span class="req">(obrigatório)</span></div>
-      <div class="outcome-btns">
-        <button class="outcomebtn ${p.outcome==='golo'?'sel':''}" data-outcome="golo" ${insideSelected?'':'disabled'}>Golo</button>
-        <button class="outcomebtn ${p.outcome==='defendido'?'sel':''}" data-outcome="defendido" ${insideSelected?'':'disabled'}>Defendido</button>
-        <button class="outcomebtn ${p.outcome==='bloqueio'?'sel':''}" data-outcome="bloqueio">Bloco</button>
-      </div>` : ''}
-      ${!isP7m ? `
-        <div class="zone-title" style="margin-top:14px;">Zona de Remate <span class="req">(obrigatório)</span></div>
-        ${renderCourtSvg(p.zoneShot)}
-      ` : `<div class="zone-title" style="margin-top:14px;">Zona de Remate: <strong>7 Metros</strong></div>`}
+      <div class="shot-modal-columns">
+        <div class="shot-modal-col">
+          <div class="zone-title">Baliza ${requiresGoalZone ? '<span class="req">(obrigatório)</span>' : '<span class="opt">(opcional)</span>'}</div>
+          ${renderGoalSvg(p.zoneGoal, showOutside)}
+        </div>
+        <div class="shot-modal-col narrow">
+          ${p.type==='remate' ? `
+          <div class="zone-title">Resultado <span class="req">(obrigatório)</span></div>
+          <div class="outcome-btns col">
+            <button class="outcomebtn ${p.outcome==='golo'?'sel':''}" data-outcome="golo" ${insideSelected?'':'disabled'}>Golo</button>
+            <button class="outcomebtn ${p.outcome==='defendido'?'sel':''}" data-outcome="defendido" ${insideSelected?'':'disabled'}>Defendido</button>
+            <button class="outcomebtn ${p.outcome==='bloqueio'?'sel':''}" data-outcome="bloqueio">Bloco</button>
+          </div>` : ''}
+        </div>
+        <div class="shot-modal-col">
+          ${!isP7m ? `
+            <div class="zone-title">Campo <span class="req">(obrigatório)</span></div>
+            ${renderCourtSvg(p.zoneShot)}
+          ` : `<div class="zone-title">Zona de Remate: <strong>7 Metros</strong></div>`}
+        </div>
+      </div>
       <div class="modal-actions">
         <button class="mbtn cancel" data-modal-cancel="1">Cancelar</button>
         <button class="mbtn primary" data-modal-confirm="1">Confirmar</button>
