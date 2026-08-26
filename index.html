@@ -451,30 +451,7 @@
     if(manifestLink) manifestLink.href = URL.createObjectURL(manifestBlob);
 
     if('serviceWorker' in navigator){
-      const swCode = `
-        const CACHE_NAME = 'evs-andebol-v2';
-        self.addEventListener('install', e => { self.skipWaiting(); });
-        self.addEventListener('activate', e => {
-          e.waitUntil(
-            caches.keys().then(keys => Promise.all(keys.filter(k => k!==CACHE_NAME).map(k => caches.delete(k))))
-          );
-          self.clients.claim();
-        });
-        self.addEventListener('fetch', e => {
-          e.respondWith(
-            fetch(e.request).then(networkResp => {
-              if(e.request.method==='GET'){
-                caches.open(CACHE_NAME).then(cache => cache.put(e.request, networkResp.clone()));
-              }
-              return networkResp;
-            }).catch(() =>
-              caches.open(CACHE_NAME).then(cache => cache.match(e.request))
-            )
-          );
-        });
-      `;
-      const swBlob = new Blob([swCode], { type: 'application/javascript' });
-      navigator.serviceWorker.register(URL.createObjectURL(swBlob)).catch(()=>{ /* offline opcional, ignora se falhar */ });
+      navigator.serviceWorker.register('sw.js').catch(()=>{ /* offline opcional, ignora se falhar (ex: a abrir como ficheiro local) */ });
     }
   } catch(e){ /* ambiente sem canvas/serviceWorker — a app continua a funcionar normalmente */ }
 })();
