@@ -341,9 +341,11 @@
   .outcome-btns.col{display:flex; flex-direction:row; gap:8px;}
   @media (max-width:1000px){
     .shot-modal-columns{display:flex; gap:16px; align-items:flex-start;}
-    .shot-modal-col{flex:1; min-width:0; margin-bottom:0;}
+    .shot-modal-col{flex:1; min-width:0; margin-bottom:0; text-align:center;}
     .shot-modal-col.narrow{flex:0 0 130px; margin-bottom:0;}
-    .outcome-btns.col{flex-direction:column;}
+    .shot-modal-col .zone-title{text-align:center;}
+    .outcome-btns.col{flex-direction:column; align-items:center;}
+    .outcome-btns.col .outcomebtn{flex:0 0 auto; width:100%;}
   }
   .modal-box.small{max-width:300px;}
   .tech-list{display:flex; flex-direction:column; gap:8px;}
