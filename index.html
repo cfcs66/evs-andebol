@@ -94,18 +94,20 @@
   .sb-periods button.active{background:var(--green-500); color:var(--dark); border-color:var(--green-500); font-weight:600;}
 
   @media (max-width:900px){
-    .scoreboard{padding:10px 14px 12px; border-radius:0 0 14px 14px; margin-bottom:10px;}
-    .sb-top{margin-bottom:6px; font-size:9px;}
-    .sb-clock button{padding:2px 7px; font-size:9px;}
-    .sb-time{font-size:12px; min-width:40px;}
-    .sb-main{gap:8px;}
-    .sb-team input.teamname{font-size:14px; max-width:140px;}
-    .sb-period{font-size:9px;}
-    .sb-score{gap:6px;}
-    .sb-score .num{font-size:30px; min-width:34px;}
-    .sb-score .sep{font-size:18px;}
-    .sb-periods{margin-top:6px; gap:5px;}
-    .sb-periods button{padding:3px 9px; font-size:10px;}
+    .scoreboard{padding:5px 10px 6px; border-radius:0 0 10px 10px; margin-bottom:6px;}
+    .sb-brand{display:none;}
+    .sb-top{margin-bottom:2px; font-size:8px; justify-content:flex-end;}
+    .sb-clock button{padding:1px 6px; font-size:8px;}
+    .sb-clock{gap:4px;}
+    .sb-time{font-size:10px; min-width:32px;}
+    .sb-main{gap:5px;}
+    .sb-team input.teamname{font-size:11px; max-width:90px; padding:1px 2px;}
+    .sb-period{font-size:7.5px;}
+    .sb-score{gap:4px;}
+    .sb-score .num{font-size:22px; min-width:24px;}
+    .sb-score .sep{font-size:14px;}
+    .sb-periods{margin-top:3px; gap:3px;}
+    .sb-periods button{padding:2px 7px; font-size:8.5px;}
   }
 
   /* ===== TABS ===== */
@@ -334,7 +336,15 @@
   /* ===== MODAL: ZONA DE REMATE ===== */
   .modal-backdrop{position:fixed; inset:0; background:rgba(19,43,24,.55); display:flex; align-items:center; justify-content:center; z-index:80; padding:16px;}
   .modal-box{background:#fff; border-radius:16px; padding:20px; width:100%; max-width:420px; max-height:92vh; overflow-y:auto; box-shadow:0 12px 40px rgba(0,0,0,.3);}
-  @media (max-width:1000px){ .modal-box.wide{max-width:96vw; padding:14px 16px;} }
+  @media (max-width:1000px){
+    .modal-box.wide{
+      position:fixed; top:64px; left:0; right:0; bottom:0;
+      max-width:100%; width:100%; max-height:none; height:auto;
+      border-radius:14px 14px 0 0; margin:0; padding:14px 16px;
+      display:flex; flex-direction:column;
+    }
+    .modal-box.wide .shot-modal-columns{flex:1;}
+  }
   .shot-modal-columns{display:block;}
   .shot-modal-col{margin-bottom:14px;}
   .shot-modal-col.narrow{margin-bottom:14px;}
@@ -345,7 +355,7 @@
     .shot-modal-col{flex:1 1 0; min-width:0; margin-bottom:0; text-align:center;}
     .shot-modal-col.narrow{flex:1 1 0; margin-bottom:0;}
     .shot-modal-col .zone-title{text-align:center; font-size:10px; margin-bottom:4px;}
-    .shot-modal-col svg{height:30vh; width:auto; max-width:100%; margin:0 auto; display:block;}
+    .shot-modal-col svg{height:34vh; width:auto; max-width:100%; margin:0 auto; display:block;}
     .outcome-btns.col{flex-direction:column; align-items:stretch; gap:6px;}
     .outcome-btns.col .outcomebtn{flex:0 0 auto; width:100%; padding:7px; font-size:11.5px;}
     .modal-box.wide .modal-actions{margin-top:10px;}
@@ -2056,7 +2066,9 @@ function attachHandlers(){
   document.querySelectorAll('[data-togglecard]').forEach(el=>{
     el.onclick = ()=>{
       const pid = Number(el.dataset.togglecard);
-      state.expandedPlayers[pid] = !state.expandedPlayers[pid];
+      const wasOpen = !!state.expandedPlayers[pid];
+      state.expandedPlayers = {};
+      if(!wasOpen) state.expandedPlayers[pid] = true;
       render();
     };
   });
