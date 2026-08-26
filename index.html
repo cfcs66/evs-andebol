@@ -334,18 +334,22 @@
   /* ===== MODAL: ZONA DE REMATE ===== */
   .modal-backdrop{position:fixed; inset:0; background:rgba(19,43,24,.55); display:flex; align-items:center; justify-content:center; z-index:80; padding:16px;}
   .modal-box{background:#fff; border-radius:16px; padding:20px; width:100%; max-width:420px; max-height:92vh; overflow-y:auto; box-shadow:0 12px 40px rgba(0,0,0,.3);}
-  @media (max-width:1000px){ .modal-box.wide{max-width:900px;} }
+  @media (max-width:1000px){ .modal-box.wide{max-width:96vw; padding:14px 16px;} }
   .shot-modal-columns{display:block;}
   .shot-modal-col{margin-bottom:14px;}
   .shot-modal-col.narrow{margin-bottom:14px;}
   .outcome-btns.col{display:flex; flex-direction:row; gap:8px;}
   @media (max-width:1000px){
-    .shot-modal-columns{display:flex; gap:16px; align-items:flex-start;}
-    .shot-modal-col{flex:1; min-width:0; margin-bottom:0; text-align:center;}
-    .shot-modal-col.narrow{flex:0 0 130px; margin-bottom:0;}
-    .shot-modal-col .zone-title{text-align:center;}
-    .outcome-btns.col{flex-direction:column; align-items:center;}
-    .outcome-btns.col .outcomebtn{flex:0 0 auto; width:100%;}
+    .modal-box.wide h3{font-size:14px; margin:0 0 8px;}
+    .shot-modal-columns{display:flex; gap:10px; align-items:flex-start;}
+    .shot-modal-col{flex:1 1 0; min-width:0; margin-bottom:0; text-align:center;}
+    .shot-modal-col.narrow{flex:1 1 0; margin-bottom:0;}
+    .shot-modal-col .zone-title{text-align:center; font-size:10px; margin-bottom:4px;}
+    .shot-modal-col svg{height:30vh; width:auto; max-width:100%; margin:0 auto; display:block;}
+    .outcome-btns.col{flex-direction:column; align-items:stretch; gap:6px;}
+    .outcome-btns.col .outcomebtn{flex:0 0 auto; width:100%; padding:7px; font-size:11.5px;}
+    .modal-box.wide .modal-actions{margin-top:10px;}
+    .modal-box.wide .mbtn{padding:6px 14px; font-size:11.5px;}
   }
   .modal-box.small{max-width:300px;}
   .tech-list{display:flex; flex-direction:column; gap:8px;}
